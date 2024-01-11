@@ -3,6 +3,8 @@ import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { AuthActions } from "./actions-types";
 import { tap } from "rxjs/operators";
+import { Router } from "@angular/router";
+
 
 @Injectable()
 export class AuthEffects{
@@ -15,7 +17,19 @@ export class AuthEffects{
         ),
         {dispatch: false} // so that user only store once in localstorage 
     )
-    constructor(private actions$:Actions){
+    logout$ = createEffect(()=>
+    this.actions$
+    .pipe(
+        ofType(AuthActions.logout),
+        tap((action)=>{
+            localStorage.removeItem('user');
+            this.router.navigateByUrl('/login');
+        }
+    )),
+    {dispatch:false}
+    )
+    constructor(private actions$:Actions,
+        private router:Router){
     }
 
 

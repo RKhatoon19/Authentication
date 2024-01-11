@@ -7,8 +7,6 @@ import {
   MetaReducer
 } from '@ngrx/store';
 
-export const reducersFeatureKey = 'reducers';
-
 export interface AppState {
 
 }
